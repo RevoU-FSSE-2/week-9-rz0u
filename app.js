@@ -91,7 +91,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// database
+// database set-up
 const db = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -134,7 +134,7 @@ app.get("/users", (request, response) => {
 
 //get by id
 app.get("/users/:id", (request, response) => {
-  const id = request.params.id;
+  const userId = request.params.id;
   db.query(
     `select 
         u.ID,
@@ -152,7 +152,7 @@ app.get("/users/:id", (request, response) => {
     group by
         u.ID 
     `,
-    id,
+    userId,
     (err, result, fields) => {
       if (err) {
         response.status(500).json(commonResponse(null, "server error"));
@@ -195,32 +195,22 @@ app.post("/transactions", (request, response) => {
 });
 
 //put
-app.put("/transactions", (request, response) => {
-  const body = request.body;
-  db.query(
-    `
-      insert into
-          revou_9.transactions (user_id, type, amount)
-      values (?, ?, ?) 
-      `,
-    [body.user_id, body.type, body.amount],
-    (err, result, fields) => {
-      if (err) {
-        response.status(500).json(commonResponse(null, "server error"));
-        response.end();
-        return;
-      }
-      response.status(200).json(
-        commonResponse(
-          {
-            id: result.insertId,
-          },
-          null
-        )
-      );
+app.put("/transactions/:id", (request, response) => {
+  const id = request.params.id;
+  const { type, amount, user_id } = request.body;
+  const sql =
+    "update revou_9.transactions set type = ?, amount = ?, user_id = ? where id = ?";
+  db.query(sql, [type, amount, user_id, id], (err, result) => {
+    console.log("err", err);
+    console.log("result", result);
+    if (err) {
+      response.status(500).json(commonResponse(null, "server error"));
       response.end();
+      return;
     }
-  );
+    response.status(200).json({ id });
+    response.end();
+  });
 });
 
 //delete
