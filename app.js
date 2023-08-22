@@ -85,16 +85,15 @@ Contracts:
 const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
-const { request } = require("http");
 
 const app = express();
+const port = process.env.port || 3000;
 
 app.use(bodyParser.json());
 
 // database set-up
 const db = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
+  host: "fdaa:2:c116:a7b:12a:fabe:ca63:2",
   user: "root",
   password: "root",
   database: "revou_9",
@@ -242,6 +241,6 @@ app.delete("/transactions/:id", (request, response) => {
 });
 
 // server
-app.listen(3000, () => {
-  console.log("running at port 3000");
+app.listen(port, () => {
+  console.log(`running at port ${port}`);
 });

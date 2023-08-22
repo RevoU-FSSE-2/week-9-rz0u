@@ -9,7 +9,7 @@
 
 ## API Endpoints
 ### Get All Users Information
-- `/users`
+- `week9.fly.dev/users`
 - GET
 - Response 
 ```
@@ -31,7 +31,7 @@
 ```
 
 ### Get User by ID
-- `/users/:id`
+- `week9.fly.dev/users/:id`
 - GET
 - Response
 ```
@@ -48,7 +48,7 @@
 ```
 
 ### Post New Transaction
-- `/transactions`
+- `week9.fly.dev/transactions`
 - POST
 - Request
 ```
@@ -70,7 +70,7 @@
 ```
 
 ### Put / Update Transactions
-- `/transactions/:id`
+- `week9.fly.dev/transactions/:id`
 - PUT
 - Request
 ```
@@ -92,7 +92,7 @@
 ```
 
 ### Delete Transactions
-- `/transactions/:id`
+- `week9.fly.dev/transactions/:id`
 - DELETE
 - Request
 ```
